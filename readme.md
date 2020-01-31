@@ -34,8 +34,8 @@ See `cumulative_sum.py`
 23    pandas_fast_cumulative_sum  100000000        1294.202          77268
 ```
 
-![Cumulative sum time]('cumulative_sum_time.png')
-![Cumulative sum efficiency]('cumulative_sum_efficiency.png')
+![Cumulative sum time](./cumulative_sum_time.png)
+![Cumulative sum efficiency](./cumulative_sum_efficiency.png)
 
 
 

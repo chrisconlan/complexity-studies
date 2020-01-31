@@ -1,6 +1,9 @@
 # complexity-studies
 Educational scripts for Feb 2020 Bethesda Data Science Meetup
 
+#### Instructions
+
+Clone the repo and run any of the Python files in the root directory.
 
 #### Sample
 

@@ -33,7 +33,8 @@ def slow_match_within(first_list, second_list):
 @time_this
 def fast_match_within(first_list, second_list):
 	"""
-	This algorithm is O(n) for n unique words in the first list
+	This algorithm is O(n + m) for n unique words in the first list and m words 
+	in the second list
 	"""
 
 	# Our output data structure will be a list of tuples

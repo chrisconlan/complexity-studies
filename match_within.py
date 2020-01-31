@@ -11,7 +11,7 @@ def random_words(n):
 	return [''.join(big_list[i:(i+7)]) for i in range(n)]
 
 @time_this
-def slow_count_within(first_list, second_list):
+def slow_match_within(first_list, second_list):
 	"""
 	This algorithm is O(nm) for n unique words in the first list and m total 
 	words in the second list
@@ -31,7 +31,7 @@ def slow_count_within(first_list, second_list):
 	return words
 
 @time_this
-def fast_count_within(first_list, second_list):
+def fast_match_within(first_list, second_list):
 	"""
 	This algorithm is O(n) for n unique words in the first list
 	"""
@@ -50,6 +50,17 @@ def fast_count_within(first_list, second_list):
 
 	return words
 
+@time_this
+def fast_intersection(first_list, second_list):
+	"""
+	This algorithm is O(n + m) for n words in the first 
+	list and m words in the second list
+
+	This problem boils down to nothing more than a set intersection, so you can 
+	use Python's built-in data structures to turn it into a one-liner
+	"""
+	return set(first_list) & set(second_list)
+
 
 if __name__ == '__main__':
 
@@ -60,11 +71,16 @@ if __name__ == '__main__':
 		for i in range(4):
 			first_list = random_words(10**(i+1))
 			second_list = random_words(10**(i+1))
-			slow_count_within(first_list, second_list)
+			slow_match_within(first_list, second_list)
 
 		print()
 		for i in range(7):
 			first_list = random_words(10**(i+1))
 			second_list = random_words(10**(i+1))
-			fast_count_within(first_list, second_list)
+			fast_match_within(first_list, second_list)
 
+		print()
+		for i in range(7):
+			first_list = random_words(10**(i+1))
+			second_list = random_words(10**(i+1))
+			fast_intersection(first_list, second_list)

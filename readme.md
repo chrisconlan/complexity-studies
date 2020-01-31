@@ -2,7 +2,10 @@
 Educational scripts for Feb 2020 Bethesda Data Science Meetup
 
 
-#### Sample output for calculating cumulative sum
+#### Cumulative sum sample
+
+See `cumulative_sum.py`.
+
 ```
                         function  n_values  t_milliseconds  values_per_ms
 0            slow_cumulative_sum        10           0.014            699

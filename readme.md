@@ -2,9 +2,9 @@
 Educational scripts for Feb 2020 Bethesda Data Science Meetup
 
 
-#### Cumulative sum sample
+#### Sample
 
-See `cumulative_sum.py`.
+See `cumulative_sum.py`
 
 ```
                         function  n_values  t_milliseconds  values_per_ms

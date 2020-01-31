@@ -1,41 +1,16 @@
 """
 Given a list of words, count the number of occurrences of each word in the list.
 """
-import time
 import random
 import string
+import pandas as pd
+from pretty_cool_profiler import time_this, timed_report
 
 def random_words(n):
 	big_list = random.choices(string.ascii_uppercase + string.digits, k=n*7)
 	return [''.join(big_list[i:(i+7)]) for i in range(n)]
 
-import pandas as pd
-
-runtime_table = list()
-def timeit(method):
-	def timed(*args, **kwargs):
-		ts = time.time()
-		result = method(*args, **kwargs)
-		te = time.time()
-		print(f'{method.__name__}')
-
-		n = len(args[0])
-		t = (te - ts) * 1000
-		n_over_t = round(n / t)
-		print(f'    n   = {n} values')
-		print(f'    t   = {round(t, 3)} ms')
-		print(f'    n/t = {n_over_t} values per ms')
-		print()
-		runtime_table.append({
-			'function': method.__name__, 
-			'n_values': n, 
-			't_milliseconds': round(t, 3), 
-			'values_per_ms': n_over_t,
-		})
-		return result
-	return timed
-
-@timeit
+@time_this
 def slow_count_occurences(the_words):
 	"""
 	This algorithm is O(nm) for n characters and m unique characters
@@ -61,7 +36,7 @@ def slow_count_occurences(the_words):
 
 	return count_by_word
 
-@timeit
+@time_this
 def fast_count_occurences(the_words):
 	"""
 	This algorithm is O(n) for n characters
@@ -82,7 +57,7 @@ def fast_count_occurences(the_words):
 
 	return count_by_word
 
-@timeit
+@time_this
 def pandas_fast_count_occurences(the_words):
 	"""
 	This algorithm is O(n) for n characters, assuming the input is a pandas 
@@ -97,18 +72,19 @@ if __name__ == '__main__':
 	# print(fast_count_occurences(the_words))
 	# print(pandas_fast_count_occurences(pd.Series(the_words)))
 
-	for i in range(4):
-		the_words = random_words(10**(i+1))
-		slow_count_occurences(the_words)
+	with timed_report():
+		for i in range(4):
+			the_words = random_words(10**(i+1))
+			slow_count_occurences(the_words)
 
-	print()
-	for i in range(7):
-		the_words = random_words(10**(i+1))
-		fast_count_occurences(the_words)
+		print()
+		for i in range(7):
+			the_words = random_words(10**(i+1))
+			fast_count_occurences(the_words)
 
-	print()
-	for i in range(7):
-		the_words = random_words(10**(i+1))
-		pandas_fast_count_occurences(pd.Series(the_words))
+		print()
+		for i in range(7):
+			the_words = random_words(10**(i+1))
+			pandas_fast_count_occurences(pd.Series(the_words))
 
-	print(pd.DataFrame(runtime_table))
+

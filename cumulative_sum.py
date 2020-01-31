@@ -82,11 +82,11 @@ if __name__ == '__main__':
 			values = random_numeric_list(10**(i+1))
 			slow_cumulative_sum_expanded(values)
 
-		for i in range(6):
+		for i in range(8):
 			values = random_numeric_list(10**(i+1))
 			fast_cumulative_sum(values)
 
-		for i in range(6):
+		for i in range(8):
 			values = random_numeric_list(10**(i+1))
 			pandas_fast_cumulative_sum(pd.Series(values))
 

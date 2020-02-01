@@ -2,13 +2,13 @@
 Given a list of numbers, compute their cumulative sum
 Output the cumulative sum to a new list
 """
-import random
-import string
 import pandas as pd
+from numba import jit
+import numpy as np
 from pretty_cool_profiler import time_this, timed_report
 
 def random_numeric_list(n):
-	return [random.random() for _ in range(n)]
+	return np.random.random(n)
 
 @time_this
 def slow_cumulative_sum(values):
@@ -71,8 +71,30 @@ def pandas_fast_cumulative_sum(values):
 	return values.cumsum()
 
 
-if __name__ == '__main__':
+@jit(nopython=True)
+def jit_fast_cumulative_sum(values):
+	"""
+	This is O(n) time, because it does n additions for n values
+	"""
+	cumulative_sum = np.zeros(values.shape[0])
+	accumulator = 0
 
+	for index, value in enumerate(values):
+		accumulator += value
+		cumulative_sum[index] = accumulator
+
+	return cumulative_sum
+
+
+@time_this
+def np_fast_cumulative_sum(values):
+	return values.cumsum()
+
+
+if __name__ == '__main__':
+	# Get numba to run the jit optimization
+	jit_fast_cumulative_sum(random_numeric_list(1000))
+	
 	with timed_report():
 		for i in range(4):
 			values = random_numeric_list(10**(i+1))
@@ -89,4 +111,12 @@ if __name__ == '__main__':
 		for i in range(8):
 			values = random_numeric_list(10**(i+1))
 			pandas_fast_cumulative_sum(pd.Series(values))
+		
+		for i in range(8):
+			values = random_numeric_list(10**(i+1))
+			jit_fast_cumulative_sum(values)
+
+		for i in range(8):
+			values = random_numeric_list(10**(i+1))
+			np_fast_cumulative_sum(values)
 

@@ -85,20 +85,26 @@ def raw_fast_cumulative_sum(values):
 
 	return cumulative_sum
 
+# Get numba to run the jit optimization
+raw_fast_cumulative_sum(random_numeric_list(10000))
+
+# Register time-able version of function
+@time_this
+def jit_fast_cumulative_sum(values):
+	return raw_fast_cumulative_sum(values)
+
 
 @time_this
 def np_fast_cumulative_sum(values):
+	"""
+	This is O(n) and optimized with C code
+
+	Assumes values is a numpy array
+	"""
 	return values.cumsum()
 
 
 if __name__ == '__main__':
-	# Get numba to run the jit optimization before testing.
-	raw_fast_cumulative_sum(random_numeric_list(1000))
-	
-	@time_this
-	def jit_fast_cumulative_sum(values):
-		return raw_faster_cumulative_sum(values)
-
 	with timed_report():
 		for i in range(4):
 			values = random_numeric_list(10**(i+1))

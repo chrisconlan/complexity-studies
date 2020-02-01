@@ -93,7 +93,7 @@ def np_fast_cumulative_sum(values):
 
 if __name__ == '__main__':
 	# Get numba to run the jit optimization before testing.
-	jit_fast_cumulative_sum(random_numeric_list(1000))
+	raw_fast_cumulative_sum(random_numeric_list(1000))
 	
 	@time_this
 	def jit_fast_cumulative_sum(values):

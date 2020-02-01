@@ -72,7 +72,7 @@ def pandas_fast_cumulative_sum(values):
 
 
 @jit(nopython=True)
-def jit_fast_cumulative_sum(values):
+def raw_fast_cumulative_sum(values):
 	"""
 	This is O(n) time, because it does n additions for n values
 	"""
@@ -92,9 +92,13 @@ def np_fast_cumulative_sum(values):
 
 
 if __name__ == '__main__':
-	# Get numba to run the jit optimization
+	# Get numba to run the jit optimization before testing.
 	jit_fast_cumulative_sum(random_numeric_list(1000))
 	
+	@time_this
+	def jit_fast_cumulative_sum(values):
+		return raw_faster_cumulative_sum(values)
+
 	with timed_report():
 		for i in range(4):
 			values = random_numeric_list(10**(i+1))

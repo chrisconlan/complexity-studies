@@ -4,6 +4,7 @@ the second list.
 """
 import random
 import string
+import pandas as pd
 from pretty_cool_profiler import time_this, timed_report
 
 def random_words(n):
@@ -63,6 +64,27 @@ def fast_intersection(first_list, second_list):
 	return set(first_list) & set(second_list)
 
 
+@time_this
+def pandas_index_intersection(first_list, second_list):
+	"""
+	This algorithm is O(n + m) for n words in the first 
+	list and m words in the second list
+
+	I did this to settle an argument about whether or not pandas indexes are 
+	set-like. They indeed are, meaning they have O(1) lookup time.
+	"""
+	first_list_as_set = set(first_list)
+	series = pd.Series([None]*len(first_list_as_set), index=first_list_as_set)
+
+	second_list_as_set = set(second_list)
+	words = list()
+
+	for word in second_list_as_set:
+		if word in series.index:
+			words.append(word)
+
+	return word
+
 if __name__ == '__main__':
 
 	# print(slow_count_within(['A', 'A', 'C', 'B'], ['A', 'B']))
@@ -75,13 +97,20 @@ if __name__ == '__main__':
 			slow_match_within(first_list, second_list)
 
 		print()
-		for i in range(7):
+		for i in range(6):
 			first_list = random_words(10**(i+1))
 			second_list = random_words(10**(i+1))
 			fast_match_within(first_list, second_list)
 
 		print()
-		for i in range(7):
+		for i in range(6):
 			first_list = random_words(10**(i+1))
 			second_list = random_words(10**(i+1))
 			fast_intersection(first_list, second_list)
+
+		print()
+		for i in range(6):
+			first_list = random_words(10**(i+1))
+			second_list = random_words(10**(i+1))
+			pandas_index_intersection(first_list, second_list)
+

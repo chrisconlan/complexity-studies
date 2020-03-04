@@ -60,11 +60,13 @@ def report_results():
         columns='function',
         values='t_milliseconds',
     )
-    pivot_table.plot(
+    ax = pivot_table.plot(
         logx=True,
         logy=True,
         title='Milliseconds to complete',
     )
+    ax.set_ylabel('milliseconds')
+    ax.set_xlabel('input length')
     plt.grid()
     plt.savefig('milliseconds_to_complete.png')
 
@@ -73,11 +75,13 @@ def report_results():
         columns='function',
         values='values_per_ms',
     )
-    pivot_table.plot(
+    ax = pivot_table.plot(
         logx=True,
         logy=True,
         title='Values processed per millisecond',
     )
+    ax.set_ylabel('values per millisecond')
+    ax.set_xlabel('input length')
     plt.grid()
     plt.savefig('values_processed_per_millisecond.png')
     plt.show()

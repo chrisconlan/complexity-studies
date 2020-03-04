@@ -1,9 +1,16 @@
 from timeit import default_timer
-import matplotlib.pyplot as plt
 import pandas as pd
 from contextlib import contextmanager
 from typing import List, Dict, Any
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
+plt.rcParams['figure.figsize'] = (7, 4)
+plt.rcParams['figure.dpi'] = 150
+
+mpl.rcParams['grid.color'] = 'k'
+mpl.rcParams['grid.linestyle'] = ':'
+mpl.rcParams['grid.linewidth'] = 0.5
 
 __all__ = ["time_this", "report_results", "timed_report"]
 # A module-level store of all the evaluation times of things you ran with the 
@@ -58,6 +65,9 @@ def report_results():
         logy=True,
         title='Milliseconds to complete',
     )
+    plt.grid()
+    plt.savefig('milliseconds_to_complete.png')
+
     pivot_table = df.pivot(
         index='n_values',
         columns='function',
@@ -68,6 +78,8 @@ def report_results():
         logy=True,
         title='Values processed per millisecond',
     )
+    plt.grid()
+    plt.savefig('values_processed_per_millisecond.png')
     plt.show()
 
 

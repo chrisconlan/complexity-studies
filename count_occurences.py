@@ -39,7 +39,7 @@ def slow_count_occurences(the_words):
 @time_this
 def fast_count_occurences(the_words):
 	"""
-	This algorithm is O(n) for n characters
+	This algorithm is O(n) for n words
 	"""
 
 	# Our output data structure
